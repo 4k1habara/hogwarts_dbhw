@@ -62,8 +62,8 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
-    @GetMapping("{age}")
-    public ResponseEntity<Collection<Student>> getStudentsWithSameAge(@PathVariable int minAge, @PathVariable int maxAge) {
+    @GetMapping
+    public ResponseEntity<Collection<Student>> getStudentsWithSameAge(@RequestParam int minAge, @RequestParam int maxAge) {
         Collection<Student> students = studentService.getStudentsAgeBetween(minAge, maxAge);
         if (students == null) {
             ResponseEntity.notFound().build();

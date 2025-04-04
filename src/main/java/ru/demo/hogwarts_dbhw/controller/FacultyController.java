@@ -60,4 +60,13 @@ public class FacultyController {
         }
         return ResponseEntity.ok(faculties);
     }
+
+    @GetMapping()
+    public ResponseEntity<Collection<Faculty>> getFacultiesByNameOrColor(@RequestParam String name, @RequestParam String color) {
+        Collection<Faculty> faculties = facultyService.getFacultiesByColor(color);
+        if (faculties == null) {
+            ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(faculties);
+    }
 }
