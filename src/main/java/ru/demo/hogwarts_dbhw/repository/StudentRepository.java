@@ -6,6 +6,7 @@ import ru.demo.hogwarts_dbhw.model.Student;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {

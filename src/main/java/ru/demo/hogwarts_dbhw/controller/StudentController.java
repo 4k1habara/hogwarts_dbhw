@@ -3,6 +3,7 @@ package ru.demo.hogwarts_dbhw.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.demo.hogwarts_dbhw.model.Faculty;
 import ru.demo.hogwarts_dbhw.model.Student;
 import ru.demo.hogwarts_dbhw.service.StudentService;
 
@@ -31,6 +32,15 @@ public class StudentController {
             ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(student);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Faculty> getStudentFaculty(@PathVariable long id) {
+        Student student = studentService.findStudent(id);
+        if (student == null) {
+            ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(student.getFaculty());
     }
 
     @PutMapping
