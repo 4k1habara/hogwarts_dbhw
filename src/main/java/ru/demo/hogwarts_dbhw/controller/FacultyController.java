@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.demo.hogwarts_dbhw.model.Faculty;
+import ru.demo.hogwarts_dbhw.model.Student;
 import ru.demo.hogwarts_dbhw.service.FacultyService;
 
 import java.util.Collection;
@@ -32,6 +33,15 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
+    @GetMapping("find")
+    public ResponseEntity<Collection<Student>> getFacultyStudents(long id) {
+        Faculty faculty = facultyService.findFaculty(id);
+        if (faculty == null) {
+            ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(faculty.getStudents());
+    }
+
     @PutMapping("edit")
     public ResponseEntity<Faculty> editFaculty(Faculty faculty) {
         Faculty foundFaculty = facultyService.editFaculty(faculty);
@@ -54,6 +64,15 @@ public class FacultyController {
 
     @GetMapping("{color}")
     public ResponseEntity<Collection<Faculty>> getFacultiesWithSameColor(@PathVariable String color) {
+        Collection<Faculty> faculties = facultyService.getFacultiesByColor(color);
+        if (faculties == null) {
+            ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(faculties);
+    }
+
+    @GetMapping()
+    public ResponseEntity<Collection<Faculty>> getFacultiesByNameOrColor(@RequestParam String name, @RequestParam String color) {
         Collection<Faculty> faculties = facultyService.getFacultiesByColor(color);
         if (faculties == null) {
             ResponseEntity.notFound().build();
